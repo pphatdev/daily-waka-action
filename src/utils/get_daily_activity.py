@@ -29,11 +29,13 @@ def get_daily_activity():
     daily_entries = stats.get("data", [])
 
     if not daily_entries:
-        raise ValueError(f"No WakaTime activity data returned for {yesterday}.")
+        print(f"No WakaTime activity data returned for {yesterday}. Skipping update.")
+        return None
 
     languages = daily_entries[0].get("languages", [])
     if not languages:
-        raise ValueError(f"No language activity found for {yesterday}.")
+        print(f"No language activity found for {yesterday}. Skipping update.")
+        return None
 
     DATA_PATH.mkdir(parents=True, exist_ok=True)
     CODING_STATS_PATH.write_text(
